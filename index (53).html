@@ -1,0 +1,126 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cash App - Send, Spend, Save, and Invest</title>
+  <meta name="description" content="Join Cash App to send money, spend with a debit card, invest in stocks or Bitcoin, and enjoy exclusive discounts. Get started today!">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body class="bg-gray-100 font-sans">
+  <!-- Header -->
+  <header class="bg-green-500 text-white py-4">
+    <div class="container mx-auto px-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold">Cash App</h1>
+      <nav>
+        <a href="#features" class="mx-2 hover:underline">Features</a>
+        <a href="#get-started" class="mx-2 hover:underline">Get Started</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="bg-white py-16">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-4xl font-bold mb-4">Your Money, Your Way with Cash App</h2>
+      <p class="text-lg mb-6">Send money to friends, shop with a debit card, invest in stocks or Bitcoin, and unlock exclusive discounts—all in one app.</p>
+      <a href="https://smrturl.co/a/sf9ce48c1f2/9855?s1=" target="_blank" class="inline-block bg-green-500 text-white font-semibold py-3 px-6 rounded-lg hover:bg-green-600 transition">Get Cash App Now</a>
+      <p class="text-sm text-gray-500 mt-4">By clicking, you’ll be redirected to an offer page. Terms and conditions apply.</p>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <h3 class="text-3xl font-bold text-center mb-12">Why Choose Cash App?</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="text-center">
+          <i class="fas fa-money-bill-wave text-4xl text-green-500 mb-4"></i>
+          <h4 class="text-xl font-semibold mb-2">Instant Money Transfers</h4>
+          <p class="text-gray-600">Send and receive money instantly with friends and family, no fees for personal use.</p>
+        </div>
+        <div class="text-center">
+          <i class="fas fa-wallet text-4xl text-green-500 mb-4"></i>
+          <h4 class="text-xl font-semibold mb-2">Cash Card</h4>
+          <p class="text-gray-600">Get a free debit card to spend your Cash App balance anywhere Visa is accepted.</p>
+        </div>
+        <div class="text-center">
+          <i class="fas fa-chart-line text-4xl text-green-500 mb-4"></i>
+          <h4 class="text-xl font-semibold mb-2">Invest with Ease</h4>
+          <p class="text-gray-600">Buy stocks or Bitcoin with as little as $1, right from the app.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section id="get-started" class="bg-green-500 text-white py-16">
+    <div class="container mx-auto px-4 text-center">
+      <h3 class="text-3xl font-bold mb-4">Ready to Join Millions of Users?</h3>
+      <p class="text-lg mb-6">Download Cash App and start managing your money today.</p>
+      <a href="https://smrturl.co/a/sf9ce48c1f2/9855?s1=" target="_blank" class="inline-block bg-white text-green-500 font-semibold py-3 px-6 rounded-lg hover:bg-gray-100 transition">Sign Up Now</a>
+      <p class="text-sm mt-4">Offer provided by a third-party partner. Please review terms before proceeding.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-8">
+    <div class="container mx-auto px-4 text-center">
+      <p class="mb-4">Cash App is a financial platform, not a bank. Banking services provided by Cash App’s bank partner(s).</p>
+      <p class="text-sm">This landing page contains links to third-party offers. We are not responsible for the content or terms of external sites. Always review offer details carefully.</p>
+      <p class="mt-4 text-sm">&copy; 2025 Cash App. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Google Ads Compliance Script -->
+  <script>
+    // Basic analytics to track clicks without collecting personal data
+    document.querySelectorAll('a[href="https://smrturl.co/a/sf9ce48c1f2/9855?s1="]').forEach(link => {
+      link.addEventListener('click', () => {
+        console.log('Offer link clicked');
+        // Add Google Analytics or similar here if needed, ensuring GDPR/CCPA compliance
+      });
+    });
+  </script>
+</body>
+</html>
